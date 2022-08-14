@@ -1,17 +1,17 @@
 require('express-async-errors')
 
 const express = require('express')
-const AppError = require('./utils/AppError')
 
-//Inicializando o express
-const app = express()
-//Buscando o arquivo que contém as rotas
-const routes = require('./router/index')
+const app = express() //Inicializando o express
+const routes = require('./router/index') //Buscando o arquivo que contém as rotas
+const AppError = require('./utils/AppError') //Buscando o arquivo que contém a classe de erro
+const migration = require('./database/sqlite/migrations/index') //Buscando o arquivo que contém a configuração do banco de dados
 
-//Definindo o tipo de dado a ser recebi pelas requisições
-app.use(express.json())
-// Especificando que as rotas serão usadas.
-app.use(routes)
+app.use(express.json()) //Definindo o tipo de dado a ser recebi pelas requisições
+app.use(routes) // Especificando que as rotas serão usadas.
+
+//Inicializando o database
+migration()
 
 //Configurando verficação de erros
 app.use((error, request, response, next) => {
