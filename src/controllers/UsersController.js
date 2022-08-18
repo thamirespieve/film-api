@@ -76,6 +76,17 @@ class UsersController {
 
     response.status(201).json()
   }
+
+  //Buscando usuário
+
+  async show(request, response) {
+    const database = await sqliteConnection()
+    const { id } = request.params
+
+    const user = await database.get(`SELECT * FROM users WHERE id = (?)`, [id])
+
+    response.json(user)
+  }
 }
 
 module.exports = UsersController
