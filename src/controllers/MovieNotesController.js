@@ -5,15 +5,28 @@ class MovieNotesController {
   //Adicionar um dado ao banco
   async create(request, response) {
     const { user_id } = request.params
-    const { title, description, rating } = request.body
+    const { title, description, rating, tags } = request.body
 
     if (rating > 5 || rating < 1) {
       throw new AppError('É necessário informar uma nota entre 1 e 5')
     }
 
-    console.log(user_id)
+    const note_id = await knex('movie_notes').insert({
+      title,
+      description,
+      rating,
+      user_id
+    })
 
-    await knex('movie_notes').insert({ title, description, rating, user_id })
+    const tagsInsert = tags.map(tag => {
+      return {
+        note_id,
+        name: tag,
+        user_id
+      }
+    })
+
+    await knex('movie_tags').insert(tagsInsert)
 
     response.status(201).json({
       title,
