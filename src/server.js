@@ -1,8 +1,10 @@
 require('express-async-errors')
 
 const express = require('express')
-
+const cors = require('cors')
 const app = express() //Inicializando o express
+app.use(cors()) // Habilitando o cors para a conexão com o front
+
 const routes = require('./router/index') //Buscando o arquivo que contém as rotas
 const AppError = require('./utils/AppError') //Buscando o arquivo que contém a classe de erro
 const migration = require('./database/sqlite/migrations/index') //Buscando o arquivo que contém a configuração do banco de dados
