@@ -7,7 +7,7 @@ const TPM_FOLDER = path.resolve(__dirname, '..', '..', 'tmp')
 const UPLOAD_FOLDER = path.resolve(TPM_FOLDER, 'uploads')
 
 const MULTER = {
-  storage: multer.diskStage({
+  storage: multer.diskStorage({
     destination: TPM_FOLDER,
     filename(request, file, callback) {
       const fileHash = crypto.randomBytes(10).toString('hex')
