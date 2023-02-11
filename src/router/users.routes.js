@@ -17,11 +17,11 @@ const upload = multer(uploadConfig.MULTER)
 usersRouter.post('/', usersController.create)
 usersRouter.put('/', ensureAuthenticated, usersController.update)
 usersRouter.get('/', ensureAuthenticated, usersController.show)
-// usersRouter.patch(
-//   '/avatar',
-//   ensureAuthenticated,
-//   upload.single('avatar'),
-//   usersAvatarController.update
-// )
+usersRouter.patch(
+  '/avatar',
+  ensureAuthenticated,
+  upload.single('avatar'),
+  usersAvatarController.update
+)
 
 module.exports = usersRouter

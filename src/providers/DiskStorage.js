@@ -13,11 +13,7 @@ class DiskStorage {
   }
 
   async deleteFile(file) {
-    const filepath = path.resolve(
-      uploadConfig,
-      uploadConfig.UPLOAD_FOLDER,
-      file
-    )
+    const filepath = path.resolve(uploadConfig.UPLOAD_FOLDER, file)
 
     try {
       await fs.promises.stat(filepath)
