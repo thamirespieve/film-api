@@ -16,7 +16,7 @@ function ensureAuthenticated(request, response, next) {
   try {
     const { sub: user_id } = verify(token, secret)
 
-    request.name = {
+    request.user = {
       id: Number(user_id)
     }
 
