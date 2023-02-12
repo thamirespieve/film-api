@@ -4,7 +4,7 @@ const AppError = require('../utils/AppError')
 class MovieNotesController {
   //Adicionar um dado ao banco
   async create(request, response) {
-    const { user_id } = request.params
+    const user_id = request.user.id
     const { title, description, rating, tags } = request.body
 
     if (rating > 5 || rating < 1) {
@@ -28,7 +28,7 @@ class MovieNotesController {
 
     await knex('movie_tags').insert(tagsInsert)
 
-    response.status(201).json({
+    return response.status(201).json({
       title,
       description,
       rating,
