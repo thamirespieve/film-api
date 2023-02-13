@@ -48,11 +48,28 @@ class MovieNotesController {
   // Eibindo vários dados
 
   async index(request, response) {
-    const { user_id } = request.query
+    const user_id = request.user.id
 
-    const movies = await knex('movie_notes').where({ user_id }).orderBy('title')
+    const movies = await knex('movie_notes')
+      .where({ user_id })
+      // .whereLike('title', `%${title}%`)
+      .orderBy('title')
 
-    response.json({ movies })
+    const tags = await knex('movie_tags').where({ user_id })
+
+    if (tags && movies) {
+      const moviesWithTags = movies.map(movie => {
+        const movieTags = tags.filter(tag => tag.note_id === movie.id)
+
+        return {
+          ...movie,
+          tags: movieTags
+        }
+      })
+      return response.json(moviesWithTags)
+    }
+
+    return response.json(movies)
   }
 
   //Excluindo um dado
