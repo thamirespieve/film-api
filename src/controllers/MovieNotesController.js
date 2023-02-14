@@ -38,11 +38,28 @@ class MovieNotesController {
 
   // Exibir um dado especifico
   async show(request, response) {
-    const { id } = request.params
+    const user_id = request.user.id
+    const { title } = request.params
+    const movie = await knex('movie_notes')
+      .where({ user_id })
+      .whereLike('title', `%${title}%`)
+    //.all()
 
-    const movie = await knex('movie_notes').where({ id }).first()
+    const tags = await knex('movie_tags').where({ user_id })
+    const searchMovie = movie
+    if (tags && searchMovie) {
+      const moviesWithTags = searchMovie.map(movie => {
+        const movieTags = tags.filter(tag => tag.note_id === movie.id)
 
-    response.status(201).json({ movie })
+        return {
+          ...movie,
+          tags: movieTags
+        }
+      })
+      return response.status(201).json(moviesWithTags)
+    }
+
+    response.status(201).json(movie)
   }
 
   // Eibindo vários dados
