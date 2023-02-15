@@ -9,6 +9,7 @@ const movieNotesController = new MovieNotesController()
 movieNotesRouter.use(ensureAuthenticated)
 
 movieNotesRouter.post('/', movieNotesController.create)
+movieNotesRouter.get('/preview/:id', movieNotesController.showInfoMovie)
 movieNotesRouter.get('/:title', movieNotesController.show)
 movieNotesRouter.delete('/:id', movieNotesController.delete)
 movieNotesRouter.get('/', movieNotesController.index)
