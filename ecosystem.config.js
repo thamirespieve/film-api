@@ -3,11 +3,11 @@ module.exports = {
     {
       name: 'app',
       script: './src/server.js',
-      instances: './max',
+      instances: 'max',
       env: {
         NODE_ENV: 'development'
       },
-      env_production: {
+      env_prodction: {
         NODE_ENV: 'production'
       }
     }
